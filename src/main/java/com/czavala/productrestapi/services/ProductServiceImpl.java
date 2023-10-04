@@ -39,16 +39,15 @@ public class ProductServiceImpl implements ProductService {
     public Product update(Long id, Product product) {
         Product productFound = productRepository.findById(id).orElse(null);
 
-        if (productFound == null) {
-            return null;
+        if (productFound != null) {
+            productFound.setNombre(product.getNombre());
+            productFound.setPrecio(product.getPrecio());
+            productFound.setMarca(product.getMarca());
+            productFound.setTipoProducto(product.getTipoProducto());
+
+            return productRepository.save(productFound);
         }
-
-        productFound.setNombre(product.getNombre());
-        productFound.setPrecio(product.getPrecio());
-        productFound.setMarca(product.getMarca());
-        productFound.setTipoProducto(product.getTipoProducto());
-
-        return productRepository.save(productFound);
+        return productFound;
     }
 
     @Override
